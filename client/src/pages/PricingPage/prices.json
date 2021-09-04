@@ -1,0 +1,38 @@
+[
+  {
+    "rateName": "Bronze",
+    "description": "Branding on a budget",
+    "price": {
+      "amount": "299",
+      "currency": "US$"
+    },
+    "options": []
+  },
+  {
+    "rateName": "Gold",
+    "description": "Increase participation and basic brand validation",
+    "price": {
+      "amount": "449",
+      "currency": "US$"
+    },
+    "options": []
+  },
+  {
+    "rateName": "Platinum",
+    "description": "Work with top-level creatives, plus agency-style brand validation",
+    "price": {
+      "amount": "749",
+      "currency": "US$"
+    },
+    "options": []
+  },
+  {
+    "rateName": "Managed",
+    "description": "A full agency experience without the agency price tag",
+    "price": {
+      "amount": "1199",
+      "currency": "US$"
+    },
+    "options": []
+  }
+]

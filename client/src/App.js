@@ -17,6 +17,7 @@ import ContestCreationPage from './pages/ContestCreation/ContestCreationPage'
 import CONSTANTS from './constants'
 import browserHistory from './browserHistory'
 import ChatContainer from './components/Chat/ChatComponents/ChatContainer/ChatContainer'
+import PricingPage from './pages/PricingPage/PricingPage'
 
 class App extends Component {
   render () {
@@ -90,6 +91,7 @@ class App extends Component {
             path='/account'
             component={withAuthorization(UserProfile)}
           />
+          <Route exact path='/pricing' component={PricingPage} />
           <Route component={NotFound} />
         </Switch>
         <ChatContainer />
