@@ -18,6 +18,7 @@ import CONSTANTS from './constants'
 import browserHistory from './browserHistory'
 import ChatContainer from './components/Chat/ChatComponents/ChatContainer/ChatContainer'
 import PricingPage from './pages/PricingPage/PricingPage'
+import TransactionPage from './pages/TransactionPage/TransactionPage'
 
 class App extends Component {
   render () {
@@ -90,6 +91,11 @@ class App extends Component {
             exact
             path='/account'
             component={withAuthorization(UserProfile)}
+          />
+          <Route
+            exact
+            path='/transaction'
+            component={withAuthorization(TransactionPage)}
           />
           <Route exact path='/pricing' component={PricingPage} />
           <Route component={NotFound} />
