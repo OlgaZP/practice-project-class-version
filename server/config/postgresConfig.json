@@ -1,8 +1,8 @@
 {
   "development": {
     "username": "postgres",
-    "password": "password",
-    "database": "todo-dev",
+    "password": "postgres",
+    "database": "squadhelp-dev-in-container",
     "host": "db-dev",
     "dialect": "postgres",
     "operatorsAliases": "Op"
