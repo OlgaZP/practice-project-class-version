@@ -8,6 +8,7 @@ const validators = require('./middlewares/validators');
 const chatController = require('./controllers/chatController');
 const upload = require('./utils/fileUpload');
 const contestRouter = require('./routes/contestRouter');
+const transactionRouter = require('./routes/transactionRouter');
 const offerController = require('./controllers/offerController');
 
 const router = express.Router();
@@ -27,6 +28,9 @@ router.post('/login', validators.validateLogin, userController.login);
 
 //contestRouter
 router.use('/contests', contestRouter);
+
+//transactionRouter
+router.use('/transactions', transactionRouter);
 
 //userRouter
 router.post('/getUser', checkToken.checkAuth);

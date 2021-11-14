@@ -1,28 +1,34 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import styles from './TransactionTable.module.sass';
 
 export const TransactionTable = props => {
   const { transactions } = props;
+  console.log(`transactions from `, transactions);
   return (
-    <table>
-      <caption> Transaction Table</caption>
-      <thead>
-        <tr>
-          <th>Date</th>
-          <th>Operation type </th>
-          <th>Amount</th>
-        </tr>
-      </thead>
-      <tbody>
-        {transactions.map(({ id, date, operationType, amount }) => (
-          <tr key={id}>
-            <td>{date}</td>
-            <td>{operationType}</td>
-            <td>{amount}</td>
+    <div className={styles.transactionTableContainer}>
+      <table>
+        <caption>Transaction History</caption>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Date</th>
+            <th>Sum</th>
+            <th>Type</th>
           </tr>
-        ))}
-      </tbody>
-    </table>
+        </thead>
+        <tbody>
+          {transactions.map(({ id, createdAt, amount, transactionType }) => (
+            <tr key={id}>
+              <td>{id}</td>
+              <td>{createdAt}</td>
+              <td>{amount}</td>
+              <td>{transactionType}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
   );
 };
 
@@ -31,7 +37,7 @@ TransactionTable.propTypes = {
     PropTypes.shape({
       id: PropTypes.number,
       date: PropTypes.string,
-      operationType: PropTypes.string,
+      type: PropTypes.string,
       amount: PropTypes.number,
     }).isRequired
   ),

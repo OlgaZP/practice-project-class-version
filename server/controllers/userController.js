@@ -205,29 +205,31 @@ module.exports.updateUser = async (req, res, next) => {
 
 module.exports.cashout = async (req, res, next) => {
   let transaction;
+  const userId = req.tokenData.userId;
+  const {
+    body: { sum, number, expiry, cvc },
+  } = req;
   try {
     transaction = await bd.sequelize.transaction();
     const updatedUser = await userQueries.updateUser(
-      { balance: bd.sequelize.literal('balance - ' + req.body.sum) },
+      { balance: bd.sequelize.literal('balance - ' + sum) },
       req.tokenData.userId,
       transaction
     );
     await bankQueries.updateBankBalance(
       {
         balance: bd.sequelize.literal(`CASE 
-                WHEN "cardNumber"='${req.body.number.replace(
+                WHEN "cardNumber"='${number.replace(
                   / /g,
                   ''
-                )}' AND "expiry"='${req.body.expiry}' AND "cvc"='${
-          req.body.cvc
-        }'
-                    THEN "balance"+${req.body.sum}
+                )}' AND "expiry"='${expiry}' AND "cvc"='${cvc}'
+                    THEN "balance"+${sum}
                 WHEN "cardNumber"='${
                   CONSTANTS.SQUADHELP_BANK_NUMBER
                 }' AND "expiry"='${
           CONSTANTS.SQUADHELP_BANK_EXPIRY
         }' AND "cvc"='${CONSTANTS.SQUADHELP_BANK_CVC}'
-                    THEN "balance"-${req.body.sum}
+                    THEN "balance"-${sum}
                  END
                 `),
       },
@@ -235,12 +237,19 @@ module.exports.cashout = async (req, res, next) => {
         cardNumber: {
           [bd.Sequelize.Op.in]: [
             CONSTANTS.SQUADHELP_BANK_NUMBER,
-            req.body.number.replace(/ /g, ''),
+            number.replace(/ /g, ''),
           ],
         },
       },
       transaction
     );
+    const cashOutTransactionData = {
+      transactionType: TRANSACTION_OPERATION_TYPES.INCOME,
+      amount: sum,
+      userId: userId,
+    };
+    await bd.Transactions.create(cashOutTransactionData, transaction);
+
     transaction.commit();
     res.send({ balance: updatedUser.balance });
   } catch (err) {
